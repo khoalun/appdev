@@ -8,7 +8,7 @@ int main(){
     FILE *f;
 	short sd[8000];
 	for(;;){
-		system("arecord -r16000 -c1 -f S16_LE -d5 test.wav");
+		system(RCMD);
 		f = fopen("test.wav","r");
     	if (f == NULL){
         printf("Cannot open the file\n");
