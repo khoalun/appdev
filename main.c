@@ -6,9 +6,10 @@
 
 int main(){
     FILE *f;
-	short sd[8000];
+	short sd[RATE];
 	for(;;){
-		system(RCMD);
+		int ret = system(RCMD);
+		if(ret =SIGINT) break;
 		f = fopen("test.wav","r");
     	if (f == NULL){
         printf("Cannot open the file\n");
@@ -25,10 +26,11 @@ int main(){
 	fread(&sd, sizeof(sd), 1, f);	// read WAV data
 	fclose(f);
     displayWAVHDR(hdr);
+	displayWAVDATA(sd);
 	// display WAVDATA()
 }
     resetColors();
-    getchar();
+//    getchar();
 
 }
 
