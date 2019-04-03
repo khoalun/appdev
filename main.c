@@ -3,7 +3,7 @@
 #include <time.h> // for randomization (using system time)
 #include <stdio.h>
 #include "sound.h"
-
+#include <signal.h>
 int main(){
     FILE *f;
 	short sd[RATE];
