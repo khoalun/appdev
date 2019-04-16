@@ -1,37 +1,62 @@
-#include <stdlib.h> // for random numbers
-#include "screen.h"
-#include <time.h> // for randomization (using system time)
 #include <stdio.h>
-#include "sound.h"
+#include <stdlib.h> // for random numbers, and system() function
+// #include <time.h>    // for randomization (using system time)
 #include <signal.h>
-int main(){
-    FILE *f;
-	short sd[RATE];
-	for(;;){
-		int ret = system(RCMD);
-		if(ret =SIGINT) break;
-		f = fopen("test.wav","r");
-    	if (f == NULL){
-        printf("Cannot open the file\n");
-        return 1;
+#include "screen.h"
+#include "sound.h"
+#include "comm.h"
+int main(int argc, char **argv){
+    if(argc>1){ // if tghe user has given some command line argument
+      printf("Test tone generator\n");
+      int fR, fL, ch;
+      float duration;
+      printf("No. of channels (1 or 2): ");
+      scanf("%d", &ch);
+      if(ch == 1){
+          printf("Mono Frequency: ");
+          scanf("%d", &fL);
+      }
+      else if(ch == 2){
+          printf("Give me Left and Right freq: ");
+          scanf("%d %d", &fL, &fR);
+      }
+      else{
+          printf("Wrong number of channels\n");
+          return 1;
+      }
+      printf("Duration of sound: ");
+      scanf("%f", &duration);
+      testTone(ch, fL, fR, duration);
+      return 0;
+}
+FILE *f;
+  short sd[RATE];
+  for(;;){
+    int ret = system(RCMD);
+    if(ret == SIGINT) break;
+    f = fopen("test.wav", "r");
+    if(f == NULL){
+      printf("Cannot open the file \n");
+      return 1;
     }
-//  int dec[COL]; // 80 pieces of sound decibels
+//  int dec[COL], i;  // 80-pieces of sound decibels
 //  srand(time(NULL));
-//  for (int i=0; i<COL; i++) dec[i]=rand()%70+30;
+//  for(i=0; i<COL; i++) dec[i] = rand()%70+30;
+
     clearScreen();
-    setColors(RED, bg(YELLOW));
+    //setColors(RED, bg(YELLOW));
 //  barChart(dec);
+
     struct WAVHDR hdr;
-    fread(&hdr, sizeof(hdr), 1, f); // read WAV header
-	fread(&sd, sizeof(sd), 1, f);	// read WAV data
-	fclose(f);
+    fread(&hdr, sizeof(hdr),1, f); // read WAV header
+    fread(&sd, sizeof(sd), 1, f);   // read WAV data
+    fclose(f);
     displayWAVHDR(hdr);
-	displayWAVDATA(sd);
-	// display WAVDATA()
+    displayWAVDATA(sd);
+    sendDATA(sd);
+  }
+  resetColors();
+//  getchar();
 }
-    resetColors();
-//    getchar();
 
-}
-
-
+// commands at these positions to show the bar chart
