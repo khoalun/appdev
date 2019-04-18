@@ -2,7 +2,7 @@
 //#define DEBUG
 #define RATE 16000
 #define DURATION 1
-#define RCMD "arecord -r16000 -c1 -f S16_LE -d1 -q test.way"
+#define RCMD "arecord -r16000 -c1 -f S16_LE -d1 -q test.wav"
 #define PI 3.14159
 //data structures
 struct WAVHDR{
