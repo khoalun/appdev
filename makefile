@@ -6,7 +6,7 @@ $(APPNAME) : $(OBJ)
 %.o : %.c
 	gcc -c -o $@ $<
 
-eee
+
 
 clean : 
 	rm $(APPNAME) $(OBJ) 
