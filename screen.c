@@ -3,7 +3,6 @@
 //some levels on a PUTTY screen as a bar chart
 #include<stdio.h>
 #include "screen.h"
-
 void barChart(int db[]) {
 	int i,j ;
 	for(i=0; i<COL; i++) { // for 80 columns
